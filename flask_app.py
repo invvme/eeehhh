@@ -32,7 +32,7 @@ def main():
 
 
 def handle_dialog(req, res):
-    user_id = req['session']['user_id']
+    user_id = req.get('session', {}).get('user_id')
 
     if req['session']['new']:
 
@@ -61,7 +61,7 @@ def handle_dialog(req, res):
         res['response']['end_session'] = True
         return
     
-    user_input = req['request']['original_utterance']
+    user_input = req.get('request', {}).get('original_utterance', '')
 
     if user_id in sessionStorage:
         suggests = sessionStorage[user_id]['suggests']
